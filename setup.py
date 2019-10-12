@@ -1,8 +1,10 @@
+#-*- coding: utf-8 -*-
+from __future__ import print_function
 import soyspacing
 import setuptools
 from setuptools import setup, find_packages
 
-with open('README.md', encoding='utf-8') as fh:
+with open('README.md') as fh:
     long_description = fh.read()
 
 setuptools.setup(

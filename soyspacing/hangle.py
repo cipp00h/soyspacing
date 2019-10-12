@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+from __future__ import print_function
 import re
 
 kor_begin     = 44032

@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 '''
 이 코드는 ScatterLab과의 협업을 통하여 만들어졌습니다. 
 Author: 
@@ -6,7 +7,7 @@ Co-author:
   sunggu, https://github.com/new21cccc
   Emily Yunha Shin, https://github.com/eyshin05
 '''
-
+from __future__ import print_function
 from collections import defaultdict
 import json
 import sys
@@ -35,7 +36,7 @@ class RuleDict:
             return tuple([None if c == '?' else int(c) for c in s])
 
         try:
-            with open(fname, encoding='utf-8') as f:
+            with open(fname) as f:
                 tmp = {}
                 for no_line, line in enumerate(f):
                     try:
@@ -151,7 +152,7 @@ class CountSpace:
         sys.stdout.write('\rall tags length = %d --> %d, (num_doc = %d)' % (before, after, num_doc))
 
     def train(self, fname, num_lines=-1):
-        with open(fname, encoding='utf-8') as f:
+        with open(fname) as f:
             for num_doc, doc in enumerate(f): 
 
                 doc = doc.replace('\n', '')
@@ -513,7 +514,7 @@ class CountSpace:
             self._save_model_as_text(fname)
 
     def _save_model_as_text(self, fname):
-        with open(fname, 'w', encoding='utf-8') as f:
+        with open(fname, 'w') as f:
             f.write('## parameters\n')
             f.write('min_window = %d\n' % self.min_window)
             f.write('max_window = %d\n' % self.max_window)
@@ -544,7 +545,7 @@ class CountSpace:
         counters = {chars:tag_as_json(tagdic) for chars, tagdic in self.CF.C.items() if len(tagdic) > 0}
         model_json['counters'] = counters
 
-        with open(fname, 'w', encoding='utf-8') as f:
+        with open(fname, 'w') as f:
             json.dump(model_json, f, ensure_ascii=False, indent=4)
 
     def load_model(self, fname, json_format=True):
@@ -554,7 +555,7 @@ class CountSpace:
             self._load_model_from_text(fname)
 
     def _load_model_from_text(self, fname):
-        with open(fname, encoding='utf-8') as f:
+        with open(fname) as f:
             next(f) # Skip: ## parameters
             self.min_window = int(next(f).split(' = ')[1])
             self.max_window = int(next(f).split(' = ')[1])
@@ -577,7 +578,7 @@ class CountSpace:
                 print('num (chars, tags, freq) parsing exception = %d' % num_exception)
 
     def _load_model_from_json(self, fname):
-        with open(fname, encoding='utf-8') as f:
+        with open(fname) as f:
             model_json = json.load(f)
 
         parameters = model_json['parameters']
